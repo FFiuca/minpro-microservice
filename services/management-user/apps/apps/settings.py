@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #third
     "debug_toolbar",
     'django_seeding',
+    'django_extensions',
     'safedelete',
     'rest_framework',
     "rest_framework.authtoken",
@@ -88,6 +89,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'apps.wsgi.application'
 
+APPEND_SLASH = True
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -110,10 +112,11 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'man_user.User'
+# AUTH_USER_MODEL = 'man_user.User'
 # when you have relationship between old user model and other
 # when you face error on your model not discovere. you can rename manually the current tb to app_model and run py manage.py migrate --fake
-
+# for third party sometime may causing crash. recomended using proxiy db from ori table.
+# recomended to use create manual migration directly using py manage.py makemigrations --empty and add your sql.
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -156,6 +159,34 @@ STATIC_ROOT = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    "loggers": {
+        "": {
+            "level": "DEBUG",
+            "handlers": ["file"],
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            "formatter": "verbose",
+        },
+    }
+}
 
 # REST FRAMEWORK
 
@@ -207,3 +238,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+# KONG
+KONG_HOST_API= env('KONG_HOST_API')
+KONG_HOST_PORT= env('KONG_HOST_PORT')
