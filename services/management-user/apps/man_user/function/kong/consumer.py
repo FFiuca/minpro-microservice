@@ -1,14 +1,13 @@
 import requests
-from config.kong import HOST, PORT, URL_MAPPING
+from config.kong import URL_MAPPING
 from man_user.models import Kong_JWT
 import logging
 import json
+from . import kong
 
 logger = logging.getLogger(__name__)
 
-class ConsumerBase:
-    def __init__(self) -> None:
-        self.url = '{}:{}'.format(HOST, PORT)
+class ConsumerBase(kong.KongBase):
 
     def create(self):
         pass

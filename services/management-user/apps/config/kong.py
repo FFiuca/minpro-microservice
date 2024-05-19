@@ -17,3 +17,7 @@ URL_MAPPING = {
         'delete': '/consumers/{consumer}/jwt/{jwt-id}',
     }
 }
+
+KEY_CLAIM_NAME = 'kid'
+CLAIM_TO_VERIFY = 'exp'
+EXPIRATION = 604800 # seconds

@@ -33,4 +33,5 @@ class RegisterTest(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json['status'], 200)
 
+        return json
 
