@@ -4,6 +4,7 @@ from man_user.models import Kong_JWT
 import logging
 import json
 from . import kong
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -24,8 +25,10 @@ class ConsumerAPI(ConsumerBase):
     def create(self, data, *args, **kwargs):
         url = self.url+ URL_MAPPING['consumer']['create']
 
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         data = {
-            'custom_id': data['username'],
+            'custom_id': now+ '_'+ data['username'],
+            'username': data['username'],
             'tags' : ['man_user_app']
         }
 

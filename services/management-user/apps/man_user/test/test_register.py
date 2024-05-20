@@ -3,6 +3,8 @@ from faker import Faker
 from django.urls import reverse
 from django.core.management import call_command
 from main.common_helper import extract_digits
+from man_user import models
+from man_user.factory import factory
 
 fake = Faker(['id_ID'])
 
@@ -34,4 +36,17 @@ class RegisterTest(APITestCase):
         self.assertEqual(json['status'], 200)
 
         return json
+
+    def test_factory_admin(self):
+        create = factory.AdminFactory.create_batch(size=2)
+        check = models.Admin.objects.count()
+
+        self.assertTrue(check>0)
+        self.assertGreater(check, 0)
+
+    def test_factory_kong(self):
+        kong = factory.Kong_JWTFactory.create()
+        check = models.Kong_JWT.objects.count()
+
+        self.assertTrue(check>0)
 

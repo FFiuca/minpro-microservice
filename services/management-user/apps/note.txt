@@ -1,0 +1,2 @@
+from django.db.migrations.recorder import MigrationRecorder
+latest_migration = MigrationRecorder.Migration.objects.order_by('-applied')[0]
