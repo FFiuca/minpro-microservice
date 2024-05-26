@@ -72,7 +72,7 @@ class JWTAction:
         header["alg"]= ALGORITHM
         header['typ']= 'JWT'
 
-        expired_at= jwt['created_at']+ EXPIRATION
+        expired_at= datetime.now().timestamp()+ EXPIRATION
 
         payload['email']= kong.user.email
         payload['kong_consumer_id'] = kong.kong_consumer_id
