@@ -16,16 +16,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+url_guest = [
+    path('man_user/', include('man_user.urls')),
+    path('coba/', include('coba.urls')),
+    path('/', include('coba.urls')),
+    path('', include('coba.urls'))
+]
+
+url_user = [
+    path('', include('coba.urls')),
+    path('coba/', include('coba.urls')),
+]
+
 urlpatterns = [
     # system
     path('admin/', admin.site.urls),
 
     # apps
     path('man_user/', include([
-        path('man_user/', include('man_user.urls')),
-        path('coba/', include('coba.urls')),
-        path('/', include('coba.urls')),
-        path('', include('coba.urls'))
+        path('guest/', include(url_guest)),
+        path('user/', include(url_user)),
     ])),
 
     # third

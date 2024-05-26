@@ -200,7 +200,8 @@ LOGGING = {
 
 REST_FRAMEWORK  = {
     'DEFAULT_AUTHENTICATION_CLASSES' : [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication', # disable due use custombaseauth class for kong
+        'config.rest_framework.auth.CustomBaseAuth',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication', # this module neeede for default auth djano, in section is django temporray login and logout
         'rest_framework.authentication.TokenAuthentication', # way to know avaible auth type: open https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme and rest_xxx.autxxx.{List of APIReference}

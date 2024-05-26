@@ -38,6 +38,16 @@ class RegisterTest(APITestCase):
 
         return json
 
+    def test_register_customer(self):
+        response = self.client.post(reverse('man_user:register.customer'), self.data_admin)
+        json = response.json()
+        print(json, response)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json['status'], 200)
+
+        return json
+
     def test_factory_admin(self):
         print('cok1')
         create = factory.AdminFactory.create_batch(size=2)
