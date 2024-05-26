@@ -33,7 +33,7 @@ class Admin(SafeDeleteModel, models.Model):
     mobile_phone = models.CharField(max_length=25, blank=True)
     full_name = models.CharField(max_length=100, blank=False)
     user = models.OneToOneField(AuthUser, on_delete=models.CASCADE,  related_name='admin_user')
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, default=1, related_name='admin_status')
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='admin_status')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
 
@@ -52,3 +52,11 @@ class Kong_JWT(SafeDeleteModel, models.Model):
     response_body = models.JSONField(null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+class Kong_JWT_Token(SafeDeleteModel, models.Model):
+    _safedelete_policy = SOFT_DELETE
+
+    kong_jwt = models.ForeignKey(Kong_JWT, on_delete=models.CASCADE)
+    token = models.TextField(blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    expired_at = models.DateTimeField(blank=True, null=True)

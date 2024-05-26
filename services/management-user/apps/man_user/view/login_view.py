@@ -6,7 +6,7 @@ from main.response_helper import response_builder
 from man_user.function.auth.auth import Login
 
 class LoginView(views.APIView):
-    # permission_classes=[permissions.IsAuthenticated is False]
+    # permission_classes=[lambda: permissions().IsAuthenticated() is False]
 
     def post(self, request, *args, **kwargs):
         data = request.data

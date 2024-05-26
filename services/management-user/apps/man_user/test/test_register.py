@@ -9,10 +9,11 @@ from man_user.factory import factory
 fake = Faker(['id_ID'])
 
 class RegisterTest(APITestCase):
+    fixtures = ['master']
 
     def setUp(self) -> None:
 
-        call_command('seed')
+        # call_command('seed') # not stable, use fixtures instead
         self.build_data()
 
     def build_data(self):
@@ -38,7 +39,9 @@ class RegisterTest(APITestCase):
         return json
 
     def test_factory_admin(self):
+        print('cok1')
         create = factory.AdminFactory.create_batch(size=2)
+        print('cok2')
         check = models.Admin.objects.count()
 
         self.assertTrue(check>0)

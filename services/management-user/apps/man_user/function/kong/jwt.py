@@ -1,9 +1,12 @@
 import requests
-from man_user.models import Kong_JWT
+from man_user.models import Kong_JWT, Kong_JWT_Token
 from . import kong
-from config.kong import URL_MAPPING
+from config.kong import URL_MAPPING, ALGORITHM, KEY_CLAIM_NAME, CLAIM_TO_VERIFY, EXPIRATION
 import logging
 import json
+import jwt as jwt_lib
+from datetime import datetime, tzinfo
+from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +19,7 @@ class JWTBase(kong.KongBase):
 
     def delete(self, data):
         pass
+
 
 class JWTApi(JWTBase):
     def create(self, data):
@@ -57,3 +61,28 @@ class JWTAction:
         user.save()
         return user
 
+    def generate_token(self, user):
+        kong = Kong_JWT.objects.filter(user=user).first()
+        jwt = kong.response_body
+
+        payload = {}
+        header={}
+
+        header[KEY_CLAIM_NAME]= jwt['key']
+        header["alg"]= ALGORITHM
+        header['typ']= 'JWT'
+
+        expired_at= jwt['created_at']+ EXPIRATION
+
+        payload['email']= kong.user.email
+        payload['kong_consumer_id'] = kong.kong_consumer_id
+        payload[CLAIM_TO_VERIFY]= expired_at
+
+        token= jwt_lib.encode(payload=payload, headers=header, key=jwt['secret'], algorithm=ALGORITHM)
+        token= Kong_JWT_Token.objects.create(
+            kong_jwt= kong,
+            token= token,
+            expired_at= datetime.fromtimestamp(expired_at)
+        )
+
+        return token

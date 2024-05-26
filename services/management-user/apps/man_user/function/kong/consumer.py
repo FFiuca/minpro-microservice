@@ -67,7 +67,7 @@ class ConsumerAction:
 
         is_exist = cons.detail(data=data)
         if is_exist['status']:
-            return is_exist
+            return is_exist['data']
 
         create = cons.create(data=data)
         print('kong',create)
@@ -84,5 +84,5 @@ class ConsumerAction:
                 'request_body': create
             }
         )
-
+        print('aah', create)
         return create

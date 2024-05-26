@@ -35,6 +35,8 @@ class AdminFactory(django.DjangoModelFactory):
     mobile_phone= factory.Sequence(lambda obj: extract_digits(fake.phone_number()))
     full_name= factory.Faker('name', locale='id_ID')
     status= MasterModel.Status.objects.order_by('?').first() # to get randomly
+    print('statusa', status.pk)
+    # status= MasterModel.Status.objects.first()
     user= factory.SubFactory(UserFactory) # to deal with 1-1 or 1-many relationship
 
 class Kong_JWTFactory(django.DjangoModelFactory):
@@ -42,5 +44,11 @@ class Kong_JWTFactory(django.DjangoModelFactory):
         model= models.Kong_JWT
         django_get_or_create= ['user']
 
+    @staticmethod
+    def generete_kong_consumer_id(obj):
+        data = ConsumerAction().create({'username': obj.user.username, 'user': obj.user})
+        print('data_kong', data)
+        return data['id']
+
     user = factory.SubFactory(UserFactory)
-    kong_consumer_id = factory.LazyAttribute(lambda obj: ConsumerAction().create({'username': obj.user.username, 'user': obj.user})['id'])
+    kong_consumer_id = factory.LazyAttribute(generete_kong_consumer_id)

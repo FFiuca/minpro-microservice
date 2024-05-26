@@ -47,7 +47,12 @@ class Login(AuthBase):
             'user': user
         })
 
+        token = clss.generate_token(user)
+
         return {
             'status': True,
-            'data': model_to_dict(jwt)
+            'data': {
+                'jwt': model_to_dict(jwt),
+                'token': model_to_dict(token)
+            }
         }

@@ -18,6 +18,7 @@ URL_MAPPING = {
     }
 }
 
+ALGORITHM= "HS256"
 KEY_CLAIM_NAME = 'kid'
 CLAIM_TO_VERIFY = 'exp'
 EXPIRATION = 604800 # seconds

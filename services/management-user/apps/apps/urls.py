@@ -21,7 +21,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # apps
-    path('man_user/', include('man_user.urls')),
+    path('man_user/', include([
+        path('man_user/', include('man_user.urls')),
+        path('coba/', include('coba.urls')),
+        path('/', include('coba.urls')),
+        path('', include('coba.urls'))
+    ])),
 
     # third
     path("__debug__/", include("debug_toolbar.urls")),
