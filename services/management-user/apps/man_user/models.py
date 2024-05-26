@@ -18,6 +18,9 @@ from django.utils.translation import gettext_lazy as _
 class Customer(SafeDeleteModel, models.Model):
     _safedelete_policy = SOFT_DELETE
 
+    class Meta:
+        ordering = ['created_at']
+
     mobile_phone = models.CharField(max_length=25, blank=True)
     full_name = models.CharField(max_length=100, blank=False)
     user = models.OneToOneField(AuthUser, on_delete=models.CASCADE, related_name='customer_user')
@@ -30,6 +33,9 @@ class Customer(SafeDeleteModel, models.Model):
 class Admin(SafeDeleteModel, models.Model):
     _safedelete_policy = SOFT_DELETE
 
+    class Meta:
+        ordering = ['created_at']
+
     mobile_phone = models.CharField(max_length=25, blank=True)
     full_name = models.CharField(max_length=100, blank=False)
     user = models.OneToOneField(AuthUser, on_delete=models.CASCADE,  related_name='admin_user')
@@ -40,6 +46,12 @@ class Admin(SafeDeleteModel, models.Model):
 # Kong Proxy
 class Kong_JWT(SafeDeleteModel, models.Model):
     _safedelete_policy = SOFT_DELETE
+
+    class Meta:
+        ordering = ['created_at']
+        indexes = [
+            models.Index(fields=['kong_consumer_id'])
+        ]
 
     user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
     jwt_id = models.CharField(max_length=255, null=True, blank=True)
@@ -56,7 +68,13 @@ class Kong_JWT(SafeDeleteModel, models.Model):
 class Kong_JWT_Token(SafeDeleteModel, models.Model):
     _safedelete_policy = SOFT_DELETE
 
+    class Meta:
+        ordering = ['created_at']
+        indexes = [
+            models.Index(fields=['token'])
+        ]
+
     kong_jwt = models.ForeignKey(Kong_JWT, on_delete=models.CASCADE)
-    token = models.TextField(blank=False, null=False)
+    token = models.CharField(max_length=500,blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     expired_at = models.DateTimeField(blank=True, null=True)
