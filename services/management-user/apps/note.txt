@@ -1,2 +1,4 @@
 from django.db.migrations.recorder import MigrationRecorder
 latest_migration = MigrationRecorder.Migration.objects.order_by('-applied')[0]
+
+APIView can't override name of function, must use get, post etc. use ViewSets instead

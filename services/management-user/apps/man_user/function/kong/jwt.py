@@ -72,8 +72,8 @@ class JWTAction:
         header["alg"]= ALGORITHM
         header['typ']= 'JWT'
 
-        expired_at= datetime.now().timestamp()+ EXPIRATION
-
+        expired_at= datetime.now().timestamp()+ EXPIRATION - 60 # -3600 maybe have different second between django and kong
+        print('[generate_token]', "\n", expired_at, "\n",datetime.now().timestamp(), "\n", jwt)
         payload['email']= kong.user.email
         payload['kong_consumer_id'] = kong.kong_consumer_id
         payload[CLAIM_TO_VERIFY]= expired_at

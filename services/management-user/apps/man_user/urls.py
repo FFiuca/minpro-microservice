@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from man_user.view.login_view import LoginView, LogoutView
-
+from man_user.view.authorization_view import AuthorizationView
 
 from man_user.view import register_view
 
@@ -20,7 +20,7 @@ url_guest = [
 ]
 
 url_user = [
-
+    path('authorization/', AuthorizationView.as_view({'post': 'check_authorization'}), name='man_user|authorization'), # from now on we naming like 'app_name|view' fo user routes due limitaion of kong. we can't use ':' as divider due has used as default divider in django itself.
 ]
 
 urlpatterns = url_guest+ url_user

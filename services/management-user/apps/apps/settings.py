@@ -67,9 +67,6 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-# FIXTURE_DIRS = [
-#     BASE_DIR / "master" / "seeder"
-# ]
 
 ROOT_URLCONF = 'apps.urls'
 
@@ -152,6 +149,7 @@ USE_TZ = True
 
 LOGIN_URL= '/accounts/login/'
 
+APP_URL=env('APP_URL')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

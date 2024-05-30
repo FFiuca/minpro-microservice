@@ -78,3 +78,7 @@ class Kong_JWT_Token(SafeDeleteModel, models.Model):
     token = models.CharField(max_length=500,blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     expired_at = models.DateTimeField(blank=True, null=True)
+
+class User_Proxy(models.Model):
+    uuid = models.CharField(primary_key=True, max_length=200, blank=False, null=False)
+    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)

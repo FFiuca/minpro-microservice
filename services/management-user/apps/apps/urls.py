@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from man_user.urls import url_guest as man_user_url_guest, url_user as man_user_user_guest
 
 url_guest = [
     path('man_user/', include('man_user.urls')),
@@ -26,6 +27,8 @@ url_guest = [
 url_user = [
     path('', include('coba.urls')),
     path('coba/', include('coba.urls')),
+    path('man_user/', include(man_user_user_guest)),
+    # path('man_user/', include('man_user.urls')),
 ]
 
 urlpatterns = [

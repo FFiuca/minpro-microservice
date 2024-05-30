@@ -27,7 +27,7 @@ class ConsumerAPI(ConsumerBase):
 
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         data = {
-            'custom_id': now+ '_'+ data['username'],
+            'custom_id': data['user'].user_proxy.pk,
             'username': data['username'],
             'tags' : ['man_user_app']
         }

@@ -3,6 +3,12 @@ from django.conf import settings
 HOST = settings.KONG_HOST_API
 PORT = settings.KONG_HOST_PORT
 
+LISTENER_HOST = 'http://localhost'
+LISTENER_PORT = '8000'
+
+PATH_GUEST = 'guest'
+PATH_USER = 'user'
+
 URL_MAPPING = {
     'consumer' : {
         'list': '/consumers',

@@ -15,8 +15,8 @@ class Test(views.APIView):
             'get': request.query_params,
             'post': request.POST,
             'url': [request.get_full_path_info(), request.get_full_path()],
-            # 'user': model_to_dict(request.user) if request.user is not None else None,
-            # 'auth': model_to_dict(request.auth) if request.user is not None else None,
+            'user': model_to_dict(request.user),
+            'auth': model_to_dict(request.auth),
         }
 
         return Response(data=data, status=200)

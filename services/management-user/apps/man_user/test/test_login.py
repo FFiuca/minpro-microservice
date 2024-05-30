@@ -25,6 +25,8 @@ class LoginTest(APITestCase):
             'email': self.user.email,
             'password': self.user.username,
         })
-        print(response.json())
+        print('test_login', response.json())
 
         self.assertTrue(response.status_code==200)
+
+        return response.json()
