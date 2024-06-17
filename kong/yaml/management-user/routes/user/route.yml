@@ -1,0 +1,36 @@
+hosts:
+- localhost
+request_buffering: true
+response_buffering: true
+sources: null
+https_redirect_status_code: 426
+protocols:
+- http
+- https
+id: 8216098b-a763-43e7-bd47-56ce6d38607c
+destinations: null
+methods:
+- GET
+- PUT
+- POST
+- PATCH
+- DELETE
+- OPTIONS
+- HEAD
+- CONNECT
+- TRACE
+snis: null
+tags:
+- user
+- auth
+- man_user
+name: user
+headers: null
+paths:
+- ~/man_user/user(/.*)$ # ~ indicate use regex
+preserve_host: false
+strip_path: false
+service:
+  id: c93b182d-fcd4-4d03-99e2-5f0979218cb6
+regex_priority: 0
+path_handling: v0

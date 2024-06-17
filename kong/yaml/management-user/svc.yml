@@ -1,0 +1,17 @@
+client_certificate: null
+connect_timeout: 60000
+read_timeout: 60000
+tls_verify: null
+host: host.docker.internal
+write_timeout: 60000
+tags:
+- minpro
+name: man-user-service-work
+enabled: true
+retries: 5
+protocol: http
+ca_certificates: null
+tls_verify_depth: null
+path: null
+id: c93b182d-fcd4-4d03-99e2-5f0979218cb6
+port: 8801

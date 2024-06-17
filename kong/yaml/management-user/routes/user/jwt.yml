@@ -1,0 +1,28 @@
+config:
+  run_on_preflight: true
+  secret_is_base64: false
+  uri_param_names: []
+  cookie_names: []
+  key_claim_name: kid
+  claims_to_verify:
+  - exp
+  maximum_expiration: 172800
+  header_names:
+  - authorization
+  anonymous: null
+tags:
+- jwt
+- man_user
+name: jwt
+instance_name: jwt-user-man-user
+route:
+  id: 8216098b-a763-43e7-bd47-56ce6d38607c
+protocols:
+- grpc
+- grpcs
+- http
+- https
+consumer: null
+service: null
+id: 7d8faf12-4f04-49fe-872b-60cd51ec8af9
+enabled: true

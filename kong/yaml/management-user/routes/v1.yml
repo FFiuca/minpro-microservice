@@ -1,0 +1,35 @@
+hosts:
+- localhost
+request_buffering: true
+response_buffering: true
+sources: null
+https_redirect_status_code: 426
+protocols:
+- http
+- https
+id: 4e0474b1-1167-428c-acc6-81cec1c2f367
+destinations: null
+methods:
+- GET
+- PUT
+- POST
+- PATCH
+- DELETE
+- OPTIONS
+- HEAD
+- CONNECT
+- TRACE
+snis: null
+tags:
+- minpro
+- man_user
+name: man_user
+headers: null
+paths:
+- ~/man_user(/.*)$
+preserve_host: false
+strip_path: false
+service:
+  id: c93b182d-fcd4-4d03-99e2-5f0979218cb6
+regex_priority: 0
+path_handling: v1
