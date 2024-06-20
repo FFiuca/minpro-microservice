@@ -2,6 +2,7 @@ from django.core.files.storage import FileSystemStorage
 from uploader.models import Files
 import uuid
 import os
+from django.conf import settings
 
 class Upload():
     base_path = 'upload/'
@@ -27,6 +28,7 @@ class Upload():
             size= f.size
             url = fs.url(filename)
             path = fs.path(filename)
+            full_url = settings.APP_URL+ url
 
             uploaded_files.append(Files(
                 id= id,
@@ -35,6 +37,7 @@ class Upload():
                 path= path,
                 type= type,
                 size= size,
+                full_url=full_url
             ))
         # print(uploaded_files)
         insert = Files.objects.bulk_create(uploaded_files)

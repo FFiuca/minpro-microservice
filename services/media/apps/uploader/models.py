@@ -20,6 +20,7 @@ class Files(SafeDeleteModel, models.Model):
     filename = models.CharField(max_length=100, blank=False, default=None)
     type= models.CharField(max_length=20, blank=True, null=True)
     path= models.TextField(blank=False, default=None)
+    full_url = models.TextField(blank=False, default=None)
     url= models.TextField(blank=False, default=None)
     size = models.FloatField(blank=True, default=None)
     created_at= models.DateTimeField(auto_now_add=True, blank=True, null=True)
