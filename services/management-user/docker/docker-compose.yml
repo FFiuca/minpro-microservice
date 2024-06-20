@@ -66,3 +66,6 @@ networks:
   minpro-db-management-user-network:
     name: minpro-db-management-user-network
     driver: bridge
+  kong-net:
+    name: kong-net
+    driver: bridge

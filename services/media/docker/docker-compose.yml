@@ -1,0 +1,36 @@
+version: '1'
+services:
+  minpro-db-media:
+    container_name: minpro-db-media
+    image: mysql:8.4
+    restart: on-failure
+    volumes:
+      - type: volume
+        source: minpro-db-media-volume
+        target: /var/lib/mysql
+        read_only: false
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:3306"
+    healthcheck:
+      test: ["CMD", "mysql", "-h", "localhost", "-u", "${DB_USERNAME}", "-p${DB_PASSWORD}", "-e", "SELECT 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 10
+      start_period: 5s
+    networks:
+      - minpro-db-media-network
+
+volumes:
+  minpro-db-media-volume:
+    name: minpro-db-media-volume
+
+networks:
+  minpro-db-media-network:
+    name: minpro-db-media-network

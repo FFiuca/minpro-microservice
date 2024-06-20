@@ -21,6 +21,7 @@ url_guest = [
 
 url_user = [
     path('authorization/', AuthorizationView.as_view({'post': 'check_authorization'}), name='man_user|authorization'), # from now on we naming like 'app_name|view' fo user routes due limitaion of kong. we can't use ':' as divider due has used as default divider in django itself.
+    path('get_auth_user/', AuthorizationView.as_view({'post': 'get_auth_user'}), name='man_user|get_auth_user'),
 ]
 
 urlpatterns = url_guest+ url_user

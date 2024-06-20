@@ -2,7 +2,7 @@ from rest_framework import views, viewsets
 from rest_framework.permissions import IsAuthenticated
 from man_user.function.auth.authorization import Authorization
 from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
-from django.forms import ValidationError
+from django.forms import ValidationError, model_to_dict
 from main.response_helper import response_builder, message_error
 from man_user.form.authorization_form import AuthorizationForm
 
@@ -31,3 +31,12 @@ class AuthorizationView(viewsets.ViewSet):
             return response_builder({'error': message_error(e)}, 500)
 
         return response_builder(result, 200)
+
+    def get_auth_user(self, request):
+        user = None
+        try:
+            user = request.user
+        except Exception as e:
+            return response_builder({'error': message_error(e)}, 500)
+
+        return response_builder(model_to_dict(user), 200)
