@@ -13,6 +13,7 @@ import environ
 import os
 from django.conf.global_settings import FIXTURE_DIRS
 from pathlib import Path
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
+TESTING = "test" in sys.argv
 
 # Application definition
 
@@ -53,13 +55,16 @@ INSTALLED_APPS = [
     'uploader',
 
     #third
-    "debug_toolbar",
-    'rest_framework',
     'django_extensions',
+    'rest_framework',
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     'rest_framework_simplejwt.token_blacklist',
 ]
+if not TESTING:
+    INSTALLED_APPS+= [
+        "debug_toolbar",
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,7 +74,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # thirds
 ]
+if not TESTING:
+    MIDDLEWARE+= [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
 
 ROOT_URLCONF = 'apps.urls'
 
