@@ -22,10 +22,14 @@ class TestUpload(APITestCase):
         print('file', self.file)
 
     def test_upload_file(self):
+        header = {
+            'X-Consumer-Custom-Id': '9854b3b8-90ba-46ad-8b3c-4e0b99d03c98'
+        }
+
         data = {
             'file': self.file
         }
 
-        response = self.client.post(reverse('uploader|upload'), data=data)
+        response = self.client.post(reverse('uploader|upload'), data=data, headers=header)
 
         self.assertEqual(response.status_code, 200)
