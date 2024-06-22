@@ -1,0 +1,3 @@
+[submodule "services/webtoon/learn-lara"]
+	path = services/webtoon/learn-lara
+	url = https://gitlab.com/Amal17/learn-lara.git
