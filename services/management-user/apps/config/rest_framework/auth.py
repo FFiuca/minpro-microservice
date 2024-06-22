@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 class CustomBaseAuth(authentication.BaseAuthentication):
      def authenticate(self, request):
         kong_consumer_custom_id = request.headers.get('X-Consumer-Custom-Id')
-        # print('masuk ini', kong_consumer_id)
+        print('masuk ini', kong_consumer_custom_id, request.headers)
         if not kong_consumer_custom_id:
             return None
 
