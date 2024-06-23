@@ -1,0 +1,61 @@
+version: '1'
+services:
+  es-container-01:
+    container_name: es-container-01
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.1
+    # volumes:
+    #   - type: volume
+    #     source: es-volume-01
+    #     target: /usr/share/elasticsearch/data
+    #     read_only: false
+    networks:
+      - es-network
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - discovery.type=single-node
+      # - xpack.security.enabled=false
+      # - xpack.security.http.ssl.enabled=false
+      # - xpack.security.transport.ssl.enabled=false
+    ports:
+      - ${ES_PORT}:9200 # for api
+      - 9300:9300 # for transport (communicate each nodes)
+  es-kibana:
+    container_name: es-kibana
+    image: docker.elastic.co/kibana/kibana:8.14.1
+    depends_on:
+      - es-container-01
+    restart: on-failure
+    # volumes:
+    #   - es-volume-kibana:/usr/share/kibana/data
+    networks:
+      - es-network
+    env_file:
+      - .env
+    # environment:
+    #   - ELASTICSEARCH_HOSTS=https://es-container-01:9200
+      # - ELASTICSEARCH_USERNAME=kibana_system
+      # - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+    ports:
+      - ${KIBANA_PORT}:5601
+  es-curl:
+    container_name: es-curl
+    image: ffiuca/mycurl:latest
+  es-nginx:
+    container_name: es-nginx
+    image: nginx:stable-alpine3.17-slim
+
+volumes:
+  es-volume-01:
+    name: es-volume-01
+    driver: local
+  es-volume-kibana:
+    name: es-volume-kibana
+    driver: local
+
+networks:
+  es-network:
+    name: es-network
+    driver: bridge
