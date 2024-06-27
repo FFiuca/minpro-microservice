@@ -121,3 +121,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# MONGO
+MONGODB_SETTINGS = {
+    'db': 'svc_search',
+    'host': 'localhost',
+    'port': 27017,
+    'username': '',
+    'password': '',
+}
+
+# ES
+ELASTICSEARCH_SETTINGS = {
+    # generated from kibana dashboard
+    'key': {
+        'api_key': 'NFRBN1daQUJPRjlRQTVfaHZ4QmQ6cHpQUnkycW1SRC1sSGNwSnhFcHZFdw==',
+        'beats_key': '4TA7WZABOF9QA5_hvxBd:pzPRy2qmRD-lHcpJxEpvEw',
+        'logstash_key': '4TA7WZABOF9QA5_hvxBd:pzPRy2qmRD-lHcpJxEpvEw'
+    },
+    'host': 'https://localhost',
+    'port': 9200,
+}
