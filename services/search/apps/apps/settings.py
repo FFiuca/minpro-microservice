@@ -131,6 +131,10 @@ MONGODB_SETTINGS = {
     'password': '',
 }
 
+# this will be default connection for mongodb
+from config.mongoengine import connect
+connect()
+
 # ES
 ELASTICSEARCH_SETTINGS = {
     # generated from kibana dashboard
