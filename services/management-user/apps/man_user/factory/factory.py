@@ -22,7 +22,7 @@ class UserFactory(django.DjangoModelFactory):
 
     username= factory.Sequence(lambda obj: fake.user_name()) # to deal with unique field. here, lambda must declare one params due factory_boy will inject in back end
     password= factory.LazyAttribute(lambda obj: make_password(obj.username)) # to deal with field who have depends on
-    # password= factory.LazyAttribute(create_password1) # to deal with field who have depends on
+    # password= factory.LazyAttribute(create_password1)
     email= factory.Sequence(lambda obj: fake.email()) # when use lambda function here, cannot combine with factory.Faker like factory.Sequence(lambda obj: extract_digits(factory.Faker('phone_number', locale='id_ID')))
     is_superuser= factory.LazyFunction(lambda: fake.random_element(elements=(0,1))) # to deal with small func
     is_staff= factory.LazyFunction(lambda: fake.random_element(elements=(0,1)))

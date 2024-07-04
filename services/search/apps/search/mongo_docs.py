@@ -11,7 +11,7 @@ class Chapter(mongoengine.EmbeddedDocument):
     language = mongoengine.StringField()
     tags = mongoengine.ListField()
 
-class TagBase(mongoengine.EmbeddedDocument):
+class TagBase(mongoengine.DynamicEmbeddedDocument):
     key = mongoengine.StringField()
     value = mongoengine.StringField()
 
@@ -34,6 +34,6 @@ class Manga(mongoengine.DynamicDocument):
     track = mongoengine.ListField()
     alternative_title = mongoengine.ListField()
     language = mongoengine.ListField()
-    tag = mongoengine.ListField(mongoengine.EmbeddedDocumentListField(TagManga))
+    tag = mongoengine.ListField(mongoengine.EmbeddedDocumentField(TagManga))
 
 

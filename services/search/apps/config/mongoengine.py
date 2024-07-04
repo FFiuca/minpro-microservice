@@ -1,8 +1,6 @@
 import mongoengine
 import importlib
 
-# from django.conf import settings
-
 def connect():
     from django.conf import settings # use delayed import to prevent cyclic import
     # print('a', settings.MONGODB_SETTINGS)
