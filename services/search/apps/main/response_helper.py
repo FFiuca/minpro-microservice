@@ -9,7 +9,7 @@ def response_builder(data:any, status:int):
 
 def message_error(e):
     exc_type, exc_obj, exc_tb = sys.exc_info()
-    print('message_error', exc_type, exc_obj, exc_tb)
+    # print('message_error', exc_type, exc_obj, exc_tb)
     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)
     print(fname)
     fname= fname[1]

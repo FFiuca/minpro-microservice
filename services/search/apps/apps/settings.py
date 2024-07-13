@@ -12,23 +12,29 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import sys
+import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+env = environ.Env(
+    DEBUG=(bool, True),
+)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7e@&iby*(!kvq6subtpl+8nfs!5y8j9^tx1a0wt$#4-afvjh6!'
+SECRET_KEY = env('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
 TESTING = True if 'test' in sys.argv else False
 
+APP_URL = env('APP_URL')
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +49,7 @@ INSTALLED_APPS = [
     'search',
 
     #third
+    'django_extensions',
     'rest_framework',
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
@@ -132,6 +139,34 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    "loggers": {
+        "": { # "" str empty, indicite will be apply in global scope
+            "level": "DEBUG",
+            "handlers": ["file"],
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            "formatter": "verbose",
+        },
+    }
+}
+
 # MONGO
 MONGODB_SETTINGS = {
     'db': 'svc_search',
@@ -159,3 +194,47 @@ ELASTICSEARCH_SETTINGS = {
     'host': 'https://localhost',
     'port': 9200,
 }
+
+REST_FRAMEWORK  = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication', # disable due use custombaseauth class for kong
+        'config.rest_framework.auth.CustomBaseAuth',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication', # this module neeede for default auth djano, in section is django temporray login and logout
+        'rest_framework.authentication.TokenAuthentication', # way to know avaible auth type: open https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme and rest_xxx.autxxx.{List of APIReference}
+    ],
+    'DEFAULT_RENDERER_CLASSES' : [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated', # any route who access must login
+        'rest_framework.permissions.AllowAny',
+    ],
+    # https://www.django-rest-framework.org/api-guide/throttling/
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '10000/day', # test for login view
+    #     'user': '10000/day',
+    #     'login-attempt' : '2/minute', # look user_app.throttling.LoginThrottle
+    #     'register-attempt' : '10/minute',
+    # },
+    # 'TEST_REQUEST_RENDERER_CLASSES': [
+    #     # 'rest_framework.renderers.MultiPartRenderer',
+    #     'rest_framework.renderers.JSONRenderer',
+    #     # 'rest_framework.renderers.TemplateHTMLRenderer'
+    # ]
+
+    # for default setting on generic and viewset view, if want on APIView to apply see https://stackoverflow.com/questions/35830779/django-rest-framework-apiview-pagination
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination', # "next": "http://127.0.0.1:8000/watch/stream/review/filter/?limit=4&offset=4&username=admin",
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination', # http://127.0.0.1:8000/watch/stream/review/filter/?cursor=cD0yMDIzLTA3LTIzKzA4JTNBMTIlM0E0Mi44NTg2NzYlMkIwMCUzQTAw&username=admin
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination', # http://127.0.0.1:8000/watch/stream/review/filter/?page=2&username=admin
+    # 'PAGE_SIZE': 4
+}
+
+# KONG
+KONG_HOST_API= env('KONG_HOST_API')
+KONG_HOST_PORT= env('KONG_HOST_PORT')
