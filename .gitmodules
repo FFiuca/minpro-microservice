@@ -1,3 +1,6 @@
 [submodule "services/webtoon/learn-lara"]
 	path = services/webtoon/learn-lara
 	url = https://gitlab.com/Amal17/learn-lara.git
+[submodule "services/webtoon2/app/learn-laravel11"]
+	path = services/webtoon2/app/learn-laravel11
+	url = https://github.com/FFiuca/learn-laravel11.git
